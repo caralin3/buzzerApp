@@ -9,8 +9,8 @@ export const DisconnectedHomeScreen: React.FC<HomeScreenProps> = () => {
   const [disabled2, setDisabled2] = React.useState(false);
   return (
     <View style={styles.container}>
-      <BuzzerButton disabled={disabled} onPress={() => setDisabled(true)} />
-      <BuzzerButton disabled={disabled2} onPress={() => setDisabled2(true)} />
+      <BuzzerButton color="blue" onPress={() => setDisabled(true)} />
+      <BuzzerButton color="green" onPress={() => setDisabled2(true)} />
     </View>
   );
 };

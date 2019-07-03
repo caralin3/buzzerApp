@@ -1,10 +1,23 @@
 import { PlaybackSource } from 'expo-av/build/AV';
 
-export interface BuzzerColor {
-  backgroundColor: string;
-  borderColor: string;
-  colors: string[];
-}
+export type ColorTypes =
+  | 'blue'
+  | 'darkGray'
+  | 'gray'
+  | 'green'
+  | 'lightBlue'
+  | 'lightGray'
+  | 'lightGreen'
+  | 'lightPink'
+  | 'orange'
+  | 'pink'
+  | 'purple'
+  | 'red'
+  | 'yellow';
+
+export type BuzzerColor = {
+  [key in ColorTypes]: string[];
+};
 
 export interface Buzzer {
   color?: BuzzerColor;

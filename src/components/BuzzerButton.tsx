@@ -4,13 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { TouchableWithoutFeedback, View, Animated, Easing } from 'react-native';
 import { Layout } from '../constants';
+import { BuzzerColor, ColorTypes } from '../types';
 
 export interface BuzzerButtonProps {
   disabled?: boolean;
+  color: ColorTypes;
   onPress: () => void;
 }
 
 export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
+  color,
   disabled,
   onPress
 }) => {
@@ -43,10 +46,20 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
     }
   };
 
-  const color = {
-    backgroundColor: '#f00',
-    borderColor: '#c71212',
-    colors: ['#ff4242', '#ff0000', '#d11b1b', '#a11616']
+  const gradientMap: BuzzerColor = {
+    yellow: ['#f1e767', '#feb645'],
+    purple: ['#cb60b3', '#de47ac', '#ad1283'],
+    lightPink: ['#febbbb', '#fe9090', '#ff5c5c'],
+    pink: ['#ff5db1', '#ef017c'],
+    orange: ['#ffa84c', '#ff7b0d'],
+    lightGreen: ['#c9de96', '#8ab66b', '#398235'],
+    lightBlue: ['#87e0fd', '#53cbf1', '#05abe0'],
+    blue: ['#7db9e8', '#2989d8', '#207cca', '#1e5799'],
+    green: ['#83c783', '#52b152', '#008a00', '#005700'],
+    red: ['#ff4242', '#ff0000', '#d11b1b', '#a11616'],
+    darkGray: ['#cedce7', '#596a72'],
+    gray: ['#fefefe', '#d1d1d1', '#dbdbdb', '#e2e2e2'],
+    lightGray: ['#f2f6f8', '#d8e1e7', '#b5c6d0', '#e0eff9']
   };
 
   const playSound = async (sound: PlaybackSource) => {
@@ -89,12 +102,11 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
       >
         <Animated.View style={{ transform: [{ translateY }] }}>
           <LinearGradient
-            colors={color.colors}
+            colors={gradientMap[color]}
             style={{
               alignItems: 'center',
-              backgroundColor: color.backgroundColor,
+              backgroundColor: '#f00',
               borderRadius: Math.round(width + height) / 2,
-              borderColor: color.borderColor,
               height: width * 0.5,
               justifyContent: 'center',
               width: width * 0.5
