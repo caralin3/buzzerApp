@@ -1,6 +1,7 @@
 import { PlaybackSource } from 'expo-av/build/AV';
 
 export type ColorTypes =
+  | 'black'
   | 'blue'
   | 'darkGray'
   | 'gray'

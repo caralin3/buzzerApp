@@ -9,12 +9,14 @@ import { BuzzerColor, ColorTypes } from '../types';
 export interface BuzzerButtonProps {
   disabled?: boolean;
   color: ColorTypes;
+  rotateX?: string;
   onPress: () => void;
 }
 
 export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
   color,
   disabled,
+  rotateX,
   onPress
 }) => {
   const [pressed, setPressed] = React.useState(false);
@@ -59,7 +61,19 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
     red: ['#ff4242', '#ff0000', '#d11b1b', '#a11616'],
     darkGray: ['#cedce7', '#596a72'],
     gray: ['#fefefe', '#d1d1d1', '#dbdbdb', '#e2e2e2'],
-    lightGray: ['#f2f6f8', '#d8e1e7', '#b5c6d0', '#e0eff9']
+    lightGray: ['#f2f6f8', '#d8e1e7', '#b5c6d0', '#e0eff9'],
+    black: [
+      '#474747',
+      '#2c2c2c',
+      '#000000',
+      '#4c4c4c',
+      '#595959',
+      '#666666',
+      '#111111',
+      '#2b2b2b',
+      '#1c1c1c',
+      '#131313'
+    ]
   };
 
   const playSound = async (sound: PlaybackSource) => {
@@ -90,14 +104,15 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
 
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
-      <View
+      <LinearGradient
+        colors={gradientMap['black']}
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#000',
           borderRadius: Math.round(width + height) / 2,
-          width: width * 0.55,
-          height: width * 0.55
+          height: width * 0.55,
+          transform: [{ rotateX: rotateX || '0deg' }],
+          width: width * 0.55
         }}
       >
         <Animated.View style={{ transform: [{ translateY }] }}>
@@ -115,7 +130,7 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
             onTouchEnd={animateUp}
           />
         </Animated.View>
-      </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
