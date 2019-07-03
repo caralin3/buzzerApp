@@ -2,27 +2,27 @@ import { Audio } from 'expo-av';
 import { PlaybackSource } from 'expo-av/build/AV';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import {
-  Dimensions,
-  TouchableWithoutFeedback,
-  View,
-  Animated,
-  Easing
-} from 'react-native';
+import { TouchableWithoutFeedback, View, Animated, Easing } from 'react-native';
+import { Layout } from '../constants';
 
 export interface BuzzerButtonProps {
-  out?: boolean;
+  disabled?: boolean;
   onPress: () => void;
 }
 
-export const BuzzerButton: React.FC<BuzzerButtonProps> = ({ out, onPress }) => {
-  const [disabled, setDisabled] = React.useState(false);
+export const BuzzerButton: React.FC<BuzzerButtonProps> = ({
+  disabled,
+  onPress
+}) => {
+  const [pressed, setPressed] = React.useState(false);
   const [translateValue] = React.useState<Animated.Value>(
     new Animated.Value(0)
   );
 
+  const { height, width } = Layout.window;
+
   const animateDown = () => {
-    if (!disabled) {
+    if (!pressed) {
       Animated.timing(translateValue, {
         duration: 10,
         easing: Easing.linear,
@@ -33,7 +33,7 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({ out, onPress }) => {
   };
 
   const animateUp = () => {
-    if (!disabled) {
+    if (!pressed) {
       Animated.timing(translateValue, {
         duration: 100,
         easing: Easing.linear,
@@ -43,17 +43,10 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({ out, onPress }) => {
     }
   };
 
-  const colors = {
-    0: {
-      backgroundColor: '#f00',
-      borderColor: '#c71212',
-      colors: ['#ff4242', '#ff0000', '#d11b1b', '#a11616']
-    },
-    1: {
-      backgroundColor: '#f00',
-      borderColor: '#c71212',
-      colors: ['#d11b1b', '#ff0000', '#a11616']
-    }
+  const color = {
+    backgroundColor: '#f00',
+    borderColor: '#c71212',
+    colors: ['#ff4242', '#ff0000', '#d11b1b', '#a11616']
   };
 
   const playSound = async (sound: PlaybackSource) => {
@@ -71,9 +64,9 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({ out, onPress }) => {
   };
 
   const handlePress = async () => {
-    if (!disabled) {
+    if (!pressed) {
       await playSound(require('../assets/audio/frog.wav'));
-      setDisabled(true);
+      setPressed(true);
     }
   };
 
@@ -89,37 +82,22 @@ export const BuzzerButton: React.FC<BuzzerButtonProps> = ({ out, onPress }) => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#000',
-          borderRadius:
-            Math.round(
-              Dimensions.get('window').width + Dimensions.get('window').height
-            ) / 2,
-          width: Dimensions.get('window').width * 0.55,
-          height: Dimensions.get('window').width * 0.55
+          borderRadius: Math.round(width + height) / 2,
+          width: width * 0.55,
+          height: width * 0.55
         }}
       >
         <Animated.View style={{ transform: [{ translateY }] }}>
           <LinearGradient
-            colors={colors[0].colors}
+            colors={color.colors}
             style={{
-              borderRadius:
-                Math.round(
-                  Dimensions.get('window').width +
-                    Dimensions.get('window').height
-                ) / 2,
-              borderColor: colors[0].borderColor,
-              width: Dimensions.get('window').width * 0.5,
-              height: Dimensions.get('window').width * 0.5,
-              backgroundColor: colors[0].backgroundColor,
-              justifyContent: 'center',
               alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 7
-              },
-              shadowOpacity: 1,
-              shadowRadius: 9.11,
-              elevation: 14
+              backgroundColor: color.backgroundColor,
+              borderRadius: Math.round(width + height) / 2,
+              borderColor: color.borderColor,
+              height: width * 0.5,
+              justifyContent: 'center',
+              width: width * 0.5
             }}
             onTouchStart={animateDown}
             onTouchEnd={animateUp}
