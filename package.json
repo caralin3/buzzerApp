@@ -5,7 +5,12 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "ts:format": "prettier --write src/**/*.ts src/**/*.tsx",
+    "ts:lint": "tslint --project ./",
+    "lint": "concurrently -n \"ts:lint\" -c \"red\" \"yarn run ts:lint\"",
+    "format": "concurrently -n \"ts:format\" -c \"red\" \"yarn run ts:format\"",
+    "check": "yarn run format && yarn run lint"
   },
   "dependencies": {
     "expo": "^33.0.0",
@@ -15,10 +20,20 @@
     "react-native-web": "^0.11.4"
   },
   "devDependencies": {
+    "@geekhive/tslint-config-standard": "^1.0.0",
     "@types/react": "^16.8.19",
     "@types/react-native": "^0.57.60",
     "babel-preset-expo": "^5.1.1",
-    "typescript": "^3.4.5"
+    "concurrently": "^4.1.1",
+    "husky": "^3.0.0",
+    "prettier": "^1.18.2",
+    "tslint": "^5.11.0",
+    "typescript": ">=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev"
   },
-  "private": true
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run format && yarn run lint"
+    }
+  }
 }

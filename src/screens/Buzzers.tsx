@@ -6,13 +6,15 @@ import { BuzzerButton } from '../components';
 export interface BuzzersProps {}
 
 export const Buzzers: React.FC<BuzzersProps> = () => {
+  const [disabled, setDisabled] = React.useState(false);
+  const [disabled2, setDisabled2] = React.useState(false);
   return (
     <View style={styles.container}>
-      <BuzzerButton />
-      <BuzzerButton />
+      <BuzzerButton out={disabled} onPress={() => setDisabled(true)} />
+      <BuzzerButton out={disabled2} onPress={() => setDisabled2(true)} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +23,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
     paddingTop: Constants.statusBarHeight + 20,
-    marginVertical: 20,
-  },
+    marginVertical: 20
+  }
 });
