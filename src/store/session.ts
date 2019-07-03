@@ -4,18 +4,18 @@ import { rehydrateAction } from './utility';
 
 const NAME = 'SESSION';
 const RESET = 'RESET';
-const SET_PLAYERS = 'SET_PLAYERS';
+const SET_BUZZER_LAYOUT = 'SET_BUZZER_LAYOUT';
 const TOGGLE_SOUND = 'TOGGLE_SOUND';
 const TOGGLE_TIMER = 'TOGGLE_TIMER';
 
 export interface SessionState {
-  players: number;
+  buzzerLayout: 'linear' | 'grid';
   sound: boolean;
   timer: boolean;
 }
 
 const initialState: SessionState = {
-  players: 1,
+  buzzerLayout: 'grid',
   sound: true,
   timer: false
 };
@@ -26,9 +26,12 @@ const resetAction = actionCreator(RESET);
 
 export const reset = () => resetAction();
 
-const setPlayersAction = actionCreator<{ players: number }>(SET_PLAYERS);
+const setBuzzerLayoutAction = actionCreator<{ layout: 'linear' | 'grid' }>(
+  SET_BUZZER_LAYOUT
+);
 
-export const setPlayers = (players: number) => setPlayersAction({ players });
+export const setBuzzerLayout = (layout: 'linear' | 'grid') =>
+  setBuzzerLayoutAction({ layout });
 
 const toggleSoundAction = actionCreator<{ on: boolean }>(TOGGLE_SOUND);
 
@@ -41,9 +44,9 @@ export const toggleTimer = (on: boolean) => toggleTimerAction({ on });
 export const reducer = reducerWithInitialState(initialState)
   .case(rehydrateAction, state => state)
   .case(resetAction, _ => ({ ...initialState }))
-  .case(setPlayersAction, (state, { players }) => ({
+  .case(setBuzzerLayoutAction, (state, { layout: buzzerLayout }) => ({
     ...state,
-    players
+    buzzerLayout
   }))
   .case(toggleSoundAction, (state, { on: sound }) => ({
     ...state,

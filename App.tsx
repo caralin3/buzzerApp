@@ -1,11 +1,12 @@
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { isIos } from './src/constants';
 import { HomeScreen } from './src/screens';
 import { ApplicationState, createStore } from './src/store';
 
@@ -53,7 +54,7 @@ const App: React.FC<AppProps> = ({ skipLoadingScreen }) => {
     <Provider store={store}>
       <PersistGate persistor={persistStore(store)}>
         <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {isIos && <StatusBar barStyle="default" />}
           {/* <AppNavigator /> */}
           <HomeScreen />
         </View>

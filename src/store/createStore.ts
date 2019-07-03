@@ -10,8 +10,7 @@ declare const window: any;
 
 export default (): Store<ApplicationState> => {
   const composeEnhancers = __DEV__
-    ? // tslint:disable-next-line no-any no-string-literal
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
       composeWithDevTools({ realtime: true })
     : compose;
 
