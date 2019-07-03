@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Buzzers } from './src/screens';
+import { HomeScreen } from './src/screens';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Buzzers />
+      <HomeScreen />
     </View>
   );
 };

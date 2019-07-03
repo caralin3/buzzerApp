@@ -1,1 +1,1 @@
-export * from './Buzzers';
+export * from './HomeScreen';
