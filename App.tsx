@@ -7,7 +7,7 @@ import { Store } from 'redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { isIos } from './src/constants';
-import { HomeScreen } from './src/screens';
+import { AppNavigator } from './src/navigation';
 import { ApplicationState, createStore } from './src/store';
 
 interface AppProps {
@@ -55,8 +55,7 @@ const App: React.FC<AppProps> = ({ skipLoadingScreen }) => {
       <PersistGate persistor={persistStore(store)}>
         <View style={styles.container}>
           {isIos && <StatusBar barStyle="default" />}
-          {/* <AppNavigator /> */}
-          <HomeScreen />
+          <AppNavigator />
         </View>
       </PersistGate>
     </Provider>
@@ -67,8 +66,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
